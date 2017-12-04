@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?><!--comment-->
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.xjm.dao.UserDao" >
+	
+	<select id="findUser" resultType="User" >
+		select * from smbms_user
+		where userCode = #{userCode}
+			and userPassword = #{userPassword}
+	</select>
+	<select id="getUserList" resultType="User" >
+		select u.*,r.roleName from smbms_user u
+		inner join smbms_role r on u.userRole = r.id		
+		<where>
+			<if test="queryname != null and queryname != ''">
+				userName like CONCAT('%',#{queryname},'%')
+			</if>
+			<if test="queryUserRole != null and queryUserRole != 0">
+				and userRole = #{queryUserRole}
+			</if>
+		</where>
+		LIMIT #{pageIndex}, #{pageSize}
+	</select>
+	<select id="getUserCount" resultType="int" >
+		select count(1) from smbms_user
+		<where>
+			<if test="queryname != null and queryname != ''">
+				userName like CONCAT('%',#{queryname},'%')
+			</if>
+			<if test="queryUserRole != null and queryUserRole != 0">
+				and userRole = #{queryUserRole}
+			</if>
+		</where>
+	</select>
+	<insert id="addUser" parameterType="User">
+		insert into smbms_user
+		values (default,#{userCode},#{userName},#{userPassword},#{gender},
+				#{birthday},#{phone},#{address},#{userRole},#{createdBy},#{creationDate},
+				#{modifyBy},#{modifyDate})
+	</insert>
+	
+	<update id="updateUser" parameterType="User" >
+		update smbms_user
+		<set>
+			<if test="userCode != null">userCode = #{userCode},</if>
+			<if test="userCode != null">userName = #{userName},</if>
+			<if test="userCode != null">userPassword = #{userPassword},</if>
+			<if test="userCode != null">gender = #{gender},</if>
+			<if test="userCode != null">birthday = #{birthday},</if>
+			<if test="userCode != null">phone = #{phone},</if>
+			<if test="userCode != null">userRole = #{userRole},</if>
+			<if test="userCode != null">address = #{address},</if>
+			<if test="userCode != null">modifyBy = #{modifyBy},</if>
+			<if test="userCode != null">modifyDate = #{modifyDate}</if>
+		</set>	
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteUser" parameterType="int">
+		delete from smbms_user 
+		where id = #{id}
+	</delete>
+	
+</mapper>

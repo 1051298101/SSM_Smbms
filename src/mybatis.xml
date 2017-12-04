@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration  
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">  
+<configuration>  
+	<properties resource="datasource.properties" />
+	<!-- <typeAliases>
+		<typeAlias alias="SmbmsUser" type="com.xjm.entity.SmbmsUser"/>
+	</typeAliases> -->
+	<typeAliases>
+		<package name="com.xjm.entity"/>
+	</typeAliases>
+    <!-- 对事务的管理和连接池的配置 -->  
+    
+      
+    <!-- mapping 文件路径配置 -->  
+</configuration>
